@@ -24,6 +24,17 @@ struct CodeBreaker {
     
     /// The list of peg colors available for player guesses.
     let pegChoices: [Peg] = [.red, .green, .blue, .yellow]
+    
+    /// Cycles or updates the peg at the specified position within the current pending guess.
+    mutating func changeGuessPeg(at index: Int) {
+        let existingPeg = guess.pegs[index]
+        if let pegIndex = pegChoices.firstIndex(of: existingPeg) {
+            let newPeg = pegChoices[(pegIndex + 1) % pegChoices.count]
+            guess.pegs[index] = newPeg
+        } else {
+            guess.pegs[index] = pegChoices.first ?? Code.missing
+        }
+    }
 }
 
 /// A combination of pegs and its role in a code-breaker game.
@@ -34,6 +45,9 @@ struct Code {
     
     /// The ordered sequence of pegs making up the combination.
     var pegs: [Peg] = [.green, .red, .red, .yellow]
+    
+    /// A placeholder peg used to represent an empty or missing slot in a combination.
+    static let missing: Peg = .clear
     
     /// The functional role or purpose of a peg combination.
     enum Kind {
