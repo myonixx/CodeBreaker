@@ -22,7 +22,7 @@ jobs:
           xcodebuild test \
             -project CodeBreaker.xcodeproj \
             -scheme CodeBreaker \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0' \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
             -only-testing:CodeBreakerUITests \
             -derivedDataPath DerivedData \
             -resultBundlePath TestResults.xcresult
