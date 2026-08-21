@@ -20,23 +20,20 @@ jobs:
     - name: Find and Boot Available Simulator
       id: find_sim
       run: |
-        # 1. Wake up simulator control core
-        xcrun simctl list devices
-        
-        # 2. Extract the UDID of the first available booted/bootable iOS simulator
-        SIM_UDID=$(xcrun simctl list devices available | grep -m 1 -E "iPhone|SE" | awk -F '[()]' '{print $(NF-1)}')
+        # 1. Look through available devices and extract ONLY the true hex UDID pattern
+        SIM_UDID=$(xcrun simctl list devices available | grep -E "iPhone|SE" | grep -E -o '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | head -n 1)
         
         if [ -z "$SIM_UDID" ]; then
-          echo "❌ Error: No available iOS Simulators found on this machine."
+          echo "❌ Error: Could not extract a valid iOS Simulator UDID."
           exit 1
         fi
         
         echo "Found Simulator UDID: $SIM_UDID"
         
-        # 3. Boot the simulator so it's warm and ready
+        # 2. Boot the simulator so it's warm and ready
         xcrun simctl boot "$SIM_UDID" || echo "Simulator already booted"
         
-        # 4. Save the UDID as an environment variable for the next step
+        # 3. Save it to the environment for xcodebuild
         echo "UDID=$SIM_UDID" >> $GITHUB_ENV
 
     - name: Run XCTest UI Tests
