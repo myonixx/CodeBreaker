@@ -1,0 +1,35 @@
+name: iOS UI Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Xcode version
+        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+
+      - name: Run XCTest UI Tests
+        run: |
+          xcodebuild test \
+            -project CodeBreaker.xcodeproj \
+            -scheme CodeBreaker \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0' \
+            -only-testing:CodeBreakerUITests \
+            -derivedDataPath DerivedData \
+            -resultBundlePath TestResults.xcresult
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xcuitest-results
+          path: TestResults.xcresult
