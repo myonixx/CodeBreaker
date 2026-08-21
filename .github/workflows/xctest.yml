@@ -11,25 +11,30 @@ jobs:
     runs-on: macos-15
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Set Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+    - name: Set Xcode version
+      run: sudo xcode-select -s /Applications/Xcode_16.0.app
 
-      - name: Run XCTest UI Tests
-        run: |
-          xcodebuild test \
-            -project CodeBreaker.xcodeproj \
-            -scheme CodeBreaker \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
-            -only-testing:CodeBreakerUITests \
-            -derivedDataPath DerivedData \
-            -resultBundlePath TestResults.xcresult
+    - name: Ensure iOS Simulator Exists
+      run: |
+        xcrun simctl list
+        xcrun simctl create "iPhone 16" com.apple.CoreSimulator.SimDeviceType.iPhone-16 com.apple.CoreSimulator.SimRuntime.iOS-18-0 || echo "Simulator already exists or runtime not found"
 
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: xcuitest-results
-          path: TestResults.xcresult
+    - name: Run XCTest UI Tests
+      run: |
+        xcodebuild test \
+          -project CodeBreaker.xcodeproj \
+          -scheme CodeBreaker \
+          -destination 'platform=iOS Simulator,name=iPhone 16' \
+          -only-testing:CodeBreakerUITests \
+          -derivedDataPath DerivedData \
+          -resultBundlePath TestResults.xcresult
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: xcuitest-results
+        path: TestResults.xcresult
