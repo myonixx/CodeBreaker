@@ -23,6 +23,14 @@ final class CodeBreakerUITests: XCTestCase {
 
         // Change the peg color
         firstPeg.tap()
+
+        // This dynamically waits up to 2 seconds for the label to update to "blue"
+        let predicate = NSPredicate(format: "label == 'blue'")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate, object: firstPeg)
+        let result = XCTWaiter.wait(for: [expectation], timeout: 2.0)
+    
+        // Confirm the wait didn't time out
+        XCTAssertEqual(result, .completed, "The peg label did not change to blue within 2 seconds.")
         
         // Assert the color string has changed to the next expected color
         let updatedColor = firstPeg.label

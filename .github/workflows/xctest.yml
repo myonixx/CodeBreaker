@@ -1,0 +1,54 @@
+name: iOS UI Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    runs-on: macos-15
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set Xcode version
+      run: sudo xcode-select -s /Applications/Xcode_16.0.app
+
+    - name: Find and Boot Available Simulator
+      id: find_sim
+      run: |
+        # 1. Look through available devices and extract ONLY the true hex UDID pattern
+        SIM_UDID=$(xcrun simctl list devices available | grep -E "iPhone|SE" | grep -E -o '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | head -n 1)
+        
+        if [ -z "$SIM_UDID" ]; then
+          echo "❌ Error: Could not extract a valid iOS Simulator UDID."
+          exit 1
+        fi
+        
+        echo "Found Simulator UDID: $SIM_UDID"
+        
+        # 2. Boot the simulator so it's warm and ready
+        xcrun simctl boot "$SIM_UDID" || echo "Simulator already booted"
+        
+        # 3. Save it to the environment for xcodebuild
+        echo "UDID=$SIM_UDID" >> $GITHUB_ENV
+
+    - name: Run XCTest UI Tests
+      run: |
+        xcodebuild test \
+          -project CodeBreaker.xcodeproj \
+          -scheme CodeBreaker \
+          -destination "platform=iOS Simulator,id=${{ env.UDID }}" \
+          -only-testing:CodeBreakerUITests \
+          -derivedDataPath DerivedData \
+          -resultBundlePath TestResults.xcresult
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: xcuitest-results
+        path: TestResults.xcresult
