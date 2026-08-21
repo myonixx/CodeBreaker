@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CodeBreakerView: View {
     @State var game = CodeBreaker()
-    
+
     var body: some View {
         VStack {
             view(for: game.masterCode)
@@ -17,7 +17,7 @@ struct CodeBreakerView: View {
         }
         .padding()
     }
-    
+
     private func view(for code: Code) -> some View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { index in
@@ -29,6 +29,12 @@ struct CodeBreakerView: View {
                             game.changeGuessPeg(at: index)
                         }
                     }
+                    // Tell UI Tests this rectangle can be interacted with like a button
+                    .accessibilityAddTraits(.isButton)
+                    // Give each rectangle a unique name based on its index
+                    .accessibilityIdentifier("\(code.kind)_code_peg_\(index)")
+                    // Expose the current peg color to XCUITest (e.g., "red", "blue", etc.)
+                    .accessibilityLabel("\(code.pegs[index].description)")
             }
             MatchMarkers(matches: [.exact, .inexact, .nomatch, .exact])
         }

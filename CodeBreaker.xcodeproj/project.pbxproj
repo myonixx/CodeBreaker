@@ -11,13 +11,29 @@
 		69D37B61302DCBAB000FB2E5 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 69D37B60302DCBA2000FB2E5 /* .gitignore */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		6941A4AB303845CE007ADD39 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 69D1F35D302DC94B004F97EE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 69D1F364302DC94B004F97EE;
+			remoteInfo = CodeBreaker;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		6941A4A5303845CE007ADD39 /* CodeBreakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeBreakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69D1F365302DC94B004F97EE /* CodeBreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeBreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69D37B5E302DCB8D000FB2E5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		69D37B60302DCBA2000FB2E5 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		6941A4A6303845CE007ADD39 /* CodeBreakerUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CodeBreakerUITests;
+			sourceTree = "<group>";
+		};
 		69D1F367302DC94B004F97EE /* CodeBreaker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CodeBreaker;
@@ -26,6 +42,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6941A4A2303845CE007ADD39 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		69D1F362302DC94B004F97EE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -42,6 +65,7 @@
 				69D37B60302DCBA2000FB2E5 /* .gitignore */,
 				69D37B5E302DCB8D000FB2E5 /* README.md */,
 				69D1F367302DC94B004F97EE /* CodeBreaker */,
+				6941A4A6303845CE007ADD39 /* CodeBreakerUITests */,
 				69D1F366302DC94B004F97EE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				69D1F365302DC94B004F97EE /* CodeBreaker.app */,
+				6941A4A5303845CE007ADD39 /* CodeBreakerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -57,6 +82,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6941A4A4303845CE007ADD39 /* CodeBreakerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6941A4AF303845CE007ADD39 /* Build configuration list for PBXNativeTarget "CodeBreakerUITests" */;
+			buildPhases = (
+				6941A4A1303845CE007ADD39 /* Sources */,
+				6941A4A2303845CE007ADD39 /* Frameworks */,
+				6941A4A3303845CE007ADD39 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6941A4AC303845CE007ADD39 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6941A4A6303845CE007ADD39 /* CodeBreakerUITests */,
+			);
+			name = CodeBreakerUITests;
+			packageProductDependencies = (
+			);
+			productName = CodeBreakerUITests;
+			productReference = 6941A4A5303845CE007ADD39 /* CodeBreakerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		69D1F364302DC94B004F97EE /* CodeBreaker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 69D1F374302DC94E004F97EE /* Build configuration list for PBXNativeTarget "CodeBreaker" */;
@@ -89,6 +137,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					6941A4A4303845CE007ADD39 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 69D1F364302DC94B004F97EE;
+					};
 					69D1F364302DC94B004F97EE = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -109,11 +161,19 @@
 			projectRoot = "";
 			targets = (
 				69D1F364302DC94B004F97EE /* CodeBreaker */,
+				6941A4A4303845CE007ADD39 /* CodeBreakerUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6941A4A3303845CE007ADD39 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		69D1F363302DC94B004F97EE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -126,6 +186,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6941A4A1303845CE007ADD39 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		69D1F361302DC94B004F97EE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -135,7 +202,54 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		6941A4AC303845CE007ADD39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 69D1F364302DC94B004F97EE /* CodeBreaker */;
+			targetProxy = 6941A4AB303845CE007ADD39 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		6941A4AD303845CE007ADD39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4939996AHC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CodeBreakerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CodeBreaker;
+			};
+			name = Debug;
+		};
+		6941A4AE303845CE007ADD39 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4939996AHC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CodeBreakerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CodeBreaker;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		69D1F372302DC94E004F97EE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -333,6 +447,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6941A4AF303845CE007ADD39 /* Build configuration list for PBXNativeTarget "CodeBreakerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6941A4AD303845CE007ADD39 /* Debug */,
+				6941A4AE303845CE007ADD39 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		69D1F360302DC94B004F97EE /* Build configuration list for PBXProject "CodeBreaker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
