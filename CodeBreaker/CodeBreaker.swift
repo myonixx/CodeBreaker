@@ -25,6 +25,13 @@ struct CodeBreaker {
     /// The list of peg colors available for player guesses.
     let pegChoices: [Peg] = [.red, .green, .blue, .yellow]
     
+    /// Submits the current guess and adds it to the attempts history.
+    mutating func attemptGuess() {
+        var attempt = guess
+        attempt.kind = .attempt
+        attempts.append(attempt)
+    }
+    
     /// Cycles or updates the peg at the specified position within the current pending guess.
     mutating func changeGuessPeg(at index: Int) {
         let existingPeg = guess.pegs[index]

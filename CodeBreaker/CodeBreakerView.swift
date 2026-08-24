@@ -13,7 +13,18 @@ struct CodeBreakerView: View {
     var body: some View {
         VStack {
             view(for: game.masterCode)
-            view(for: game.guess)
+            ScrollView {
+                view(for: game.guess)
+                ForEach(game.attempts.indices.reversed(), id: \.self) { index in
+                    view(for: game.attempts[index])
+                }
+            }
+            Button("Guess") {
+                withAnimation {
+                    game.attemptGuess()
+                }
+            }
+            .accessibilityIdentifier("guessButton")
         }
         .padding()
     }
