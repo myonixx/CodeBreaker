@@ -7,6 +7,8 @@
 
 import XCTest
 
+/// Note: GitHub Actions virtual macOS runners have lower CPU performance than local machines, causing animations
+/// to lag or stutter. Use a timeout of 10.0 seconds to prevent random timeout failures from slow runner loads
 final class CodeBreakerUITests: XCTestCase {
 
     func testPegColorChangesOnTap() {
@@ -42,7 +44,7 @@ final class CodeBreakerUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        // Locate the Guess button and the first historical row identifier
+        // Locate the Guess button
         let guessButton = app.buttons["guessButton"]
 
         // Locate the Guess code pegs
@@ -50,12 +52,9 @@ final class CodeBreakerUITests: XCTestCase {
         let guessSecondPeg = app.buttons["guess_code_peg_1"]
         let guessThirdPeg = app.buttons["guess_code_peg_2"]
         let guessFourthPeg = app.buttons["guess_code_peg_3"]
-
-        // Target the element type broadly to avoid layout wrapper mismatch issues
-        let attemptFirstPeg = app.descendants(matching: .any)["attempt_code_peg_0"]
-        let attemptSecondPeg = app.descendants(matching: .any)["attempt_code_peg_1"]
-        let attemptThirdPeg = app.descendants(matching: .any)["attempt_code_peg_2"]
-        let attemptFourthPeg = app.descendants(matching: .any)["attempt_code_peg_3"]
+        
+        // Target the first attempt row container safely using otherElements
+        let firstAttemptRow = app.scrollViews.otherElements["attempt_0"]
 
         // Verify initial game state
         XCTAssertTrue(guessButton.exists, "The Guess button should be visible.")
@@ -63,27 +62,67 @@ final class CodeBreakerUITests: XCTestCase {
         XCTAssertTrue(guessSecondPeg.exists, "The second Guess code peg should be visible.")
         XCTAssertTrue(guessThirdPeg.exists, "The third Guess code peg should be visible.")
         XCTAssertTrue(guessFourthPeg.exists, "The fourth Guess code peg should be visible.")
-        XCTAssertFalse(attemptFirstPeg.exists, "There should be no Attempt history pegs initially.")
-        XCTAssertFalse(attemptSecondPeg.exists, "There should be no Attempt history pegs initially.")
-        XCTAssertFalse(attemptThirdPeg.exists, "There should be no Attempt history pegs initially.")
-        XCTAssertFalse(attemptFourthPeg.exists, "There should be no Attempt history pegs initially.")
+        XCTAssertFalse(firstAttemptRow.exists, "There should be no Attempt history pegs initially.")
 
         // Trigger the action
         guessButton.tap()
-       
-        // Wait for the animated UI change to finish and assert the view appeared
-        // GitHub Actions virtual macOS runners have lower CPU performance than
-        // local machines, causing animations to lag or stutter. Use a timeout of
-        // 10.0 seconds to prevent random timeout failures from slow runner loads
-        XCTAssertTrue(attemptFirstPeg.waitForExistence(timeout: 10.0))
-        XCTAssertTrue(attemptSecondPeg.waitForExistence(timeout: 10.0))
-        XCTAssertTrue(attemptThirdPeg.waitForExistence(timeout: 10.0))
-        XCTAssertTrue(attemptFourthPeg.waitForExistence(timeout: 10.0))
         
+        // Verify the attempt history row is visible
+        XCTAssertTrue(firstAttemptRow.waitForExistence(timeout: 10.0), "The attempt history row should appear after tapping Guess.")
+        
+        // Locate the first attempt rows pegs
+        let attemptFirstPeg = firstAttemptRow.buttons["code_peg_0"]
+        let attemptSecondPeg = firstAttemptRow.buttons["code_peg_1"]
+        let attemptThirdPeg = firstAttemptRow.buttons["code_peg_2"]
+        let attemptFourthPeg = firstAttemptRow.buttons["code_peg_3"]
+        
+        // Verify Attempt code pegs are visible
+        XCTAssertTrue(attemptFirstPeg.waitForExistence(timeout: 10.0), "The first peg inside the attempt history row should be visible.")
+        XCTAssertTrue(attemptSecondPeg.waitForExistence(timeout: 10.0), "The second peg inside the attempt history row should be visible.")
+        XCTAssertTrue(attemptThirdPeg.waitForExistence(timeout: 10.0), "The third peg inside the attempt history row should be visible.")
+        XCTAssertTrue(attemptFourthPeg.waitForExistence(timeout: 10.0), "The fourth peg inside the attempt history row should be visible.")
+       
         // Verify Guess and Attempt pegs match
         XCTAssertEqual(guessFirstPeg.label, attemptFirstPeg.label)
         XCTAssertEqual(guessSecondPeg.label, attemptSecondPeg.label)
         XCTAssertEqual(guessThirdPeg.label, attemptThirdPeg.label)
         XCTAssertEqual(guessFourthPeg.label, attemptFourthPeg.label)
     }
+    
+    func testShowAttemptExactMatchMarker() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        // Locate the Guess button
+        let guessButton = app.buttons["guessButton"]
+        
+        // Target the attempt row container safely using otherElements
+        let container = app.scrollViews.otherElements["attempt_0"]
+        
+        // Verify initial game state (should not exist before clicking guess)
+        XCTAssertFalse(container.exists, "There should be no Attempt history pegs initially.")
+        
+        // Trigger the guess
+        guessButton.tap()
+        
+        // Verify the attempt container appears
+        XCTAssertTrue(container.waitForExistence(timeout: 10.0), "The attempt history row should appear after tapping Guess.")
+        
+        // Query for the button trait directly within that specific container
+        let attemptFirstPeg = container.buttons["code_peg_0"]
+        
+        // Verify Attempt code first peg is visible and accessible
+        XCTAssertTrue(attemptFirstPeg.waitForExistence(timeout: 10.0), "The first peg inside the attempt history row should be visible.")
+        
+        // Locate first Match Marker peg that is associated with the Attempt code
+        let matchMarkerFirstPeg = container.descendants(matching: .any)["match_marker_0"]
+        
+        // Verify Match Marker first peg assocaited with the Attempt code is visible
+        XCTAssertTrue(matchMarkerFirstPeg.waitForExistence(timeout: 10.0), "The Match Marker first peg associated with the attempt history row should be visible.")
+        
+        // Verify Match Marker first peg assocaited with the Attempt code is an exact match
+        let matchMarkerFirstPegValue = matchMarkerFirstPeg.value as? String
+        XCTAssertEqual(matchMarkerFirstPegValue, "exact", "The accessibility value did not match 'exact'.")
+    }
+    
 }

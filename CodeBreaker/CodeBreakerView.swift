@@ -17,6 +17,10 @@ struct CodeBreakerView: View {
                 view(for: game.guess)
                 ForEach(game.attempts.indices.reversed(), id: \.self) { index in
                     view(for: game.attempts[index])
+                        // CRITICAL: Exposes the internal HStack code pegs to XCUITest
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier("attempt_\(index)")
+                        
                 }
             }
             Button("Guess") {
@@ -43,12 +47,19 @@ struct CodeBreakerView: View {
                     // Tell UI Tests this rectangle can be interacted with like a button
                     .accessibilityAddTraits(.isButton)
                     // Give each rectangle a unique name based on its index
-                    .accessibilityIdentifier("\(code.kind)_code_peg_\(index)")
+                    .accessibilityIdentifier(pegIdentifier(at: index, code.kind))
                     // Expose the current peg color to XCUITest (e.g., "red", "blue", etc.)
                     .accessibilityLabel("\(code.pegs[index].description)")
             }
-            MatchMarkers(matches: [.exact, .inexact, .nomatch, .exact])
+            MatchMarkers(matches: code.matches)
         }
+    }
+    
+    private func pegIdentifier(at index: Int, _ kind: Code.Kind) -> String {
+        if case Code.Kind.attempt = kind {
+            return "code_peg_\(index)"
+        }
+        return "\(kind)_code_peg_\(index)"
     }
 }
 

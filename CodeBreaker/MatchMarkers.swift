@@ -32,6 +32,8 @@ struct MatchMarkers: View {
             .fill(exactCount > peg ? Color.primary : Color.clear)
             .strokeBorder(foundCount > peg ? Color.primary : Color.clear, lineWidth: 1)
             .aspectRatio(1, contentMode: .fit)
+            .accessibilityIdentifier("match_marker_\(peg)")
+            .accessibilityValue(exactCount > peg ? "exact" : foundCount > peg ? "inexact" : "nomatch")
     }
 }
 
