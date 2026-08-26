@@ -28,7 +28,7 @@ struct CodeBreaker {
     /// Submits the current guess and adds it to the attempts history.
     mutating func attemptGuess() {
         var attempt = guess
-        attempt.kind = .attempt
+        attempt.kind = .attempt(guess.match(against: masterCode))
         attempts.append(attempt)
     }
     
@@ -57,7 +57,7 @@ struct Code {
     static let missing: Peg = .clear
     
     /// The functional role or purpose of a peg combination.
-    enum Kind {
+    enum Kind: Equatable {
         
         /// The secret combination that the player is trying to guess.
         case master
@@ -66,9 +66,38 @@ struct Code {
         case guess
         
         /// A previously submitted guess that has been made.
-        case attempt
+        case attempt([Match])
         
         /// A placeholder state for an uninitialized or invalid code.
         case unknown
+    }
+    
+    /// Return the active matches for an `.attempt`; return empty otherwise.
+    var matches: [Match] {
+        switch kind {
+        case .attempt(let matches): return matches
+        default: return []
+        }
+    }
+
+    /// Matches against another Code and returns an Array of Match that lineup with the various pegs.
+    func match(against otherCode: Code) -> [Match] {
+        var results: [Match] = Array(repeating: .nomatch, count: pegs.count)
+        var pegsToMatch = otherCode.pegs
+        for index in pegs.indices.reversed() {
+            if pegsToMatch.count > index, pegsToMatch[index] == pegs[index] {
+                results[index] = .exact
+                pegsToMatch.remove(at: index)
+            }
+        }
+        for index in pegs.indices {
+            if results[index] != .exact {
+                if let matchIndex = pegsToMatch.firstIndex(of: pegs[index]) {
+                    results[index] = .inexact
+                    pegsToMatch.remove(at: matchIndex)
+                }
+            }
+        }
+        return results
     }
 }
