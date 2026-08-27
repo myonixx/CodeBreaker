@@ -12,6 +12,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		690EB2E3304028650082C491 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 69D1F35D302DC94B004F97EE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 69D1F364302DC94B004F97EE;
+			remoteInfo = CodeBreaker;
+		};
 		6941A4AB303845CE007ADD39 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 69D1F35D302DC94B004F97EE /* Project object */;
@@ -22,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		690EB2DF304028650082C491 /* CodeBreakerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeBreakerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6941A4A5303845CE007ADD39 /* CodeBreakerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeBreakerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		69D1F365302DC94B004F97EE /* CodeBreaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeBreaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69D37B5E302DCB8D000FB2E5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -29,6 +37,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		690EB2E0304028650082C491 /* CodeBreakerTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = CodeBreakerTests;
+			sourceTree = "<group>";
+		};
 		6941A4A6303845CE007ADD39 /* CodeBreakerUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = CodeBreakerUITests;
@@ -42,6 +55,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		690EB2DC304028650082C491 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6941A4A2303845CE007ADD39 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -66,6 +86,7 @@
 				69D37B5E302DCB8D000FB2E5 /* README.md */,
 				69D1F367302DC94B004F97EE /* CodeBreaker */,
 				6941A4A6303845CE007ADD39 /* CodeBreakerUITests */,
+				690EB2E0304028650082C491 /* CodeBreakerTests */,
 				69D1F366302DC94B004F97EE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -75,6 +96,7 @@
 			children = (
 				69D1F365302DC94B004F97EE /* CodeBreaker.app */,
 				6941A4A5303845CE007ADD39 /* CodeBreakerUITests.xctest */,
+				690EB2DF304028650082C491 /* CodeBreakerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -82,6 +104,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		690EB2DE304028650082C491 /* CodeBreakerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 690EB2E7304028650082C491 /* Build configuration list for PBXNativeTarget "CodeBreakerTests" */;
+			buildPhases = (
+				690EB2DB304028650082C491 /* Sources */,
+				690EB2DC304028650082C491 /* Frameworks */,
+				690EB2DD304028650082C491 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				690EB2E4304028650082C491 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				690EB2E0304028650082C491 /* CodeBreakerTests */,
+			);
+			name = CodeBreakerTests;
+			packageProductDependencies = (
+			);
+			productName = CodeBreakerTests;
+			productReference = 690EB2DF304028650082C491 /* CodeBreakerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		6941A4A4303845CE007ADD39 /* CodeBreakerUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6941A4AF303845CE007ADD39 /* Build configuration list for PBXNativeTarget "CodeBreakerUITests" */;
@@ -137,6 +182,10 @@
 				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					690EB2DE304028650082C491 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 69D1F364302DC94B004F97EE;
+					};
 					6941A4A4303845CE007ADD39 = {
 						CreatedOnToolsVersion = 16.2;
 						TestTargetID = 69D1F364302DC94B004F97EE;
@@ -162,11 +211,19 @@
 			targets = (
 				69D1F364302DC94B004F97EE /* CodeBreaker */,
 				6941A4A4303845CE007ADD39 /* CodeBreakerUITests */,
+				690EB2DE304028650082C491 /* CodeBreakerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		690EB2DD304028650082C491 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6941A4A3303845CE007ADD39 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -186,6 +243,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		690EB2DB304028650082C491 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6941A4A1303845CE007ADD39 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -203,6 +267,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		690EB2E4304028650082C491 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 69D1F364302DC94B004F97EE /* CodeBreaker */;
+			targetProxy = 690EB2E3304028650082C491 /* PBXContainerItemProxy */;
+		};
 		6941A4AC303845CE007ADD39 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 69D1F364302DC94B004F97EE /* CodeBreaker */;
@@ -211,6 +280,47 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		690EB2E5304028650082C491 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4939996AHC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CodeBreakerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeBreaker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CodeBreaker";
+			};
+			name = Debug;
+		};
+		690EB2E6304028650082C491 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4939996AHC;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.CodeBreakerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeBreaker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CodeBreaker";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		6941A4AD303845CE007ADD39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -447,6 +557,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		690EB2E7304028650082C491 /* Build configuration list for PBXNativeTarget "CodeBreakerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				690EB2E5304028650082C491 /* Debug */,
+				690EB2E6304028650082C491 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6941A4AF303845CE007ADD39 /* Build configuration list for PBXNativeTarget "CodeBreakerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
