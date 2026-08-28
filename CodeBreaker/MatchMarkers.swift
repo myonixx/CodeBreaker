@@ -28,12 +28,12 @@ struct MatchMarkers: View {
     private func matchMarker(peg: Int) -> some View {
         let exactCount = matches.count { match in match == .exact }
         let foundCount = matches.count { match in match != .nomatch }
+        let match = exactCount > peg ? "exact" : foundCount > peg ? "inexact" : "nomatch"
         return Circle()
             .fill(exactCount > peg ? Color.primary : Color.clear)
             .strokeBorder(foundCount > peg ? Color.primary : Color.clear, lineWidth: 1)
             .aspectRatio(1, contentMode: .fit)
-            .accessibilityIdentifier("match_marker_\(peg)")
-            .accessibilityValue(exactCount > peg ? "exact" : foundCount > peg ? "inexact" : "nomatch")
+            .accessibilityIdentifier("match_marker_peg_\(peg)_\(match)")
     }
 }
 
