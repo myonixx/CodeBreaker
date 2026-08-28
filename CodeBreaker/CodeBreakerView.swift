@@ -15,11 +15,12 @@ struct CodeBreakerView: View {
             view(for: game.masterCode)
             ScrollView {
                 view(for: game.guess)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityIdentifier("guess_code")
                 ForEach(game.attempts.indices.reversed(), id: \.self) { index in
                     view(for: game.attempts[index])
-                        // CRITICAL: Exposes the internal HStack code pegs to XCUITest
                         .accessibilityElement(children: .contain)
-                        .accessibilityIdentifier("attempt_\(index)")
+                        .accessibilityIdentifier("attempt_code_\(index)")
                         
                 }
             }
@@ -28,7 +29,7 @@ struct CodeBreakerView: View {
                     game.attemptGuess()
                 }
             }
-            .accessibilityIdentifier("guessButton")
+            .accessibilityIdentifier("guess_button")
         }
         .padding()
     }
@@ -44,23 +45,13 @@ struct CodeBreakerView: View {
                             game.changeGuessPeg(at: index)
                         }
                     }
-                    // Tell UI Tests this rectangle can be interacted with like a button
                     .accessibilityAddTraits(.isButton)
-                    // Give each rectangle a unique name based on its index
-                    .accessibilityIdentifier(pegIdentifier(at: index, code.kind))
-                    // Expose the current peg color to XCUITest (e.g., "red", "blue", etc.)
-                    .accessibilityLabel("\(code.pegs[index].description)")
+                    .accessibilityIdentifier("peg_\(index)_\(code.pegs[index].description)")
             }
             MatchMarkers(matches: code.matches)
         }
     }
     
-    private func pegIdentifier(at index: Int, _ kind: Code.Kind) -> String {
-        if case Code.Kind.attempt = kind {
-            return "code_peg_\(index)"
-        }
-        return "\(kind)_code_peg_\(index)"
-    }
 }
 
 #Preview {
