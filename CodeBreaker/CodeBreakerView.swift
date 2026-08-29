@@ -48,7 +48,11 @@ struct CodeBreakerView: View {
                     .accessibilityAddTraits(.isButton)
                     .accessibilityIdentifier("peg_\(index)_\(code.pegs[index].description)")
             }
-            MatchMarkers(matches: code.matches)
+            if code.kind == .master || code.kind == .guess {
+                MatchMarkers(matches: [.nomatch, .nomatch, .nomatch, .nomatch])
+            } else {
+                MatchMarkers(matches: code.matches)
+            }
         }
     }
     
