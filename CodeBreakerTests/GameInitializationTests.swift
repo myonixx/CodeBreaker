@@ -20,7 +20,7 @@ struct GameInitializationTests {
         #expect(game.pegChoices == expectedDefaults)
     }
     
-    @Test("Initializer sets the custom peg choies when an argument is passed")
+    @Test("Initializer sets the custom peg choices when an argument is passed")
     func testInitWithCustomPegChoices() {
         // Create game with custom peg choices
         let customPegChoices: [Peg] = [.red, .blue, .blue, .yellow]
@@ -28,6 +28,15 @@ struct GameInitializationTests {
         
         // Verifies that passing custom peg choices successfully updates the property
         #expect(game.pegChoices == customPegChoices)
+    }
+    
+    @Test("Initializer sets empty peg choices when empty array is passed")
+    func testInitWithEmptyPegChoices() {
+        // Create game with empty array
+        let game = CodeBreaker(pegChoices: [])
+        
+        // Verify that passing empty array successfully updates the property
+        #expect(game.pegChoices == [])
     }
     
     @Test("Initializer randomizes the master code using only the allowed peg choices")
@@ -47,5 +56,5 @@ struct GameInitializationTests {
         // Verify that it's truly random, they shouldn't all be identical
         #expect(uniqueCodes.count > 1, "The initializer generated the exact same code every time. Is it hardcoded?")
     }
-
+    
 }
