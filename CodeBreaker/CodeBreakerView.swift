@@ -21,17 +21,21 @@ struct CodeBreakerView: View {
                     view(for: game.attempts[index])
                         .accessibilityElement(children: .contain)
                         .accessibilityIdentifier("attempt_code_\(index)")
-                        
                 }
             }
-            Button("Guess") {
-                withAnimation {
-                    game.attemptGuess()
-                }
-            }
-            .accessibilityIdentifier("guess_button")
         }
         .padding()
+    }
+    
+    private var guessButton: some View {
+        Button("Guess") {
+            withAnimation {
+                game.attemptGuess()
+            }
+        }
+        .font(.system(size: 80))
+        .minimumScaleFactor(0.1)
+        .accessibilityIdentifier("guess_button")
     }
 
     private func view(for code: Code) -> some View {
@@ -50,6 +54,11 @@ struct CodeBreakerView: View {
             }
             if code.kind == .master || code.kind == .guess {
                 MatchMarkers(matches: [.nomatch, .nomatch, .nomatch, .nomatch])
+                    .overlay {
+                        if code.kind == .guess {
+                            guessButton
+                        }
+                    }
             } else {
                 MatchMarkers(matches: code.matches)
             }
