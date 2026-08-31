@@ -42,6 +42,7 @@ struct CodeBreakerView: View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { index in
                 RoundedRectangle(cornerRadius: 10)
+                    .contentShape(Rectangle())
                     .aspectRatio(1, contentMode: .fit)
                     .foregroundStyle(code.pegs[index])
                     .onTapGesture {
