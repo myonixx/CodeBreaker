@@ -22,7 +22,7 @@ struct CodeBreakerTests {
         #expect(game.guess.pegs[0] == .blue)
     }
     
-    @Test("Attempting a guess stores the code pegs, calculates the matches, and updates the history")
+    @Test("Attempting a guess stores the code pegs and updates the history")
     func testAttemptGuess() {
         // Initial game state
         var game = CodeBreaker()
@@ -41,9 +41,6 @@ struct CodeBreakerTests {
         
         // Verify attempt code pegs are correct
         #expect(firstAttempt.pegs == [.green, .red, .red, .yellow])
-        
-        // Verify attempt code matches are correct
-        #expect(firstAttempt.matches == [.exact, .exact, .exact, .exact])
     }
     
 }

@@ -23,7 +23,14 @@ struct CodeBreaker {
     var attempts = [Code]()
     
     /// The list of peg colors available for player guesses.
-    let pegChoices: [Peg] = [.red, .green, .blue, .yellow]
+    let pegChoices: [Peg]
+
+    /// Sets up the available peg choices for the game and automatically
+    /// generates a secret master code selected randomly from those choices.
+    init(pegChoices: [Peg] = [.red, .green, .blue, .yellow]) {
+        self.pegChoices = pegChoices
+        masterCode.randomize(from: pegChoices)
+    }
     
     /// Submits the current guess and adds it to the attempts history.
     mutating func attemptGuess() {
@@ -70,6 +77,14 @@ struct Code {
         
         /// A placeholder state for an uninitialized or invalid code.
         case unknown
+    }
+    
+    /// Randomizes the current pegs using choices from the specified pool.
+    /// If the pool is empty, assigns a missing placeholder peg.
+    mutating func randomize(from pegChoices: [Peg]) {
+        for index in pegChoices.indices {
+            pegs[index] = pegChoices.randomElement() ?? Code.missing
+        }
     }
     
     /// Return the active matches for an `.attempt`; return empty otherwise.
