@@ -36,7 +36,7 @@ struct CodeBreakerView: View {
         .font(.system(size: 80))
         .minimumScaleFactor(0.1)
         .accessibilityIdentifier("guess_button")
-        .disabled(game.isGuessAttemptBlank())
+        .disabled(game.isGuessAttemptBlank() || game.isDuplicateAttempt())
     }
 
     private func view(for code: Code) -> some View {

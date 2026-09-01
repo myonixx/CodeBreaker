@@ -30,7 +30,7 @@ struct CodeBreakerTests {
         // Ensure starting attempt history is empty
         #expect(game.attempts.isEmpty)
 
-        // attempt a guess
+        // Attempt guess
         game.attemptGuess()
 
         // Verify that exactly one attempt was added to the history
