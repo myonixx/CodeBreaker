@@ -37,6 +37,11 @@ struct CodeBreaker {
         guess.pegs.filter { $0 != Code.missing }.count < 1
     }
     
+    /// Returns true if an identical peg configuration exists in attempts; otherwise, false.
+    func isDuplicateAttempt() -> Bool {
+        attempts.contains { $0.pegs == guess.pegs }
+    }
+    
     /// Submits the current guess and adds it to the attempts history.
     mutating func attemptGuess() {
         var attempt = guess
