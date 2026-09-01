@@ -32,6 +32,11 @@ struct CodeBreaker {
         masterCode.randomize(from: pegChoices)
     }
     
+    /// Returns true if the guess attempt has no pegs chosen; otherwise, false.
+    func isGuessAttemptBlank() -> Bool {
+        guess.pegs.filter { $0 != Code.missing }.count < 1
+    }
+    
     /// Submits the current guess and adds it to the attempts history.
     mutating func attemptGuess() {
         var attempt = guess
