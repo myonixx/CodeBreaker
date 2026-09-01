@@ -58,7 +58,8 @@ struct Code {
     var kind: Kind
     
     /// The ordered sequence of pegs making up the combination.
-    var pegs: [Peg] = [.green, .red, .red, .yellow]
+    /// Initial pegs are empty or missing.
+    var pegs: [Peg] = Array(repeating: Code.missing, count: 4)
     
     /// A placeholder peg used to represent an empty or missing slot in a combination.
     static let missing: Peg = .clear
