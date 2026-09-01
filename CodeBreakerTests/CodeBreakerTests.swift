@@ -19,7 +19,7 @@ struct CodeBreakerTests {
         game.changeGuessPeg(at: 0)
         
         // Verify it changed to the expected next color
-        #expect(game.guess.pegs[0] == .blue)
+        #expect(game.guess.pegs[0] == .red)
     }
     
     @Test("Attempting a guess stores the code pegs and updates the history")
@@ -40,7 +40,16 @@ struct CodeBreakerTests {
         let firstAttempt = game.attempts[0]
         
         // Verify attempt code pegs are correct
-        #expect(firstAttempt.pegs == [.green, .red, .red, .yellow])
+        #expect(firstAttempt.pegs == [.clear, .clear, .clear, .clear])
+    }
+    
+    @Test("Initial guess code is missing")
+    func testInitWithEmptyPegChoices() {
+        // Create game with default values
+        let game = CodeBreaker()
+        
+        // Verify that guess code pegs are missing (Color.clear)
+        #expect(game.guess.pegs == [.clear, .clear, .clear, .clear])
     }
     
 }
