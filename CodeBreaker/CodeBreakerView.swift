@@ -23,6 +23,7 @@ struct CodeBreakerView: View {
                         .accessibilityIdentifier("attempt_code_\(index)")
                 }
             }
+            restartButton
         }
         .padding()
     }
@@ -37,6 +38,14 @@ struct CodeBreakerView: View {
         .minimumScaleFactor(0.1)
         .accessibilityIdentifier("guess_button")
         .disabled(game.isGuessAttemptBlank() || game.isDuplicateAttempt())
+    }
+    
+    private var restartButton: some View {
+        Button("Restart") {
+            withAnimation {
+                game.restartGame()
+            }
+        }
     }
 
     private func view(for code: Code) -> some View {

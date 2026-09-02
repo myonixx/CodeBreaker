@@ -32,14 +32,11 @@ struct CodeBreaker {
         masterCode.randomize(from: pegChoices)
     }
     
-    /// Returns true if the guess attempt has no pegs chosen; otherwise, false.
-    func isGuessAttemptBlank() -> Bool {
-        guess.pegs.filter { $0 != Code.missing }.count < 1
-    }
-    
-    /// Returns true if an identical peg configuration exists in attempts; otherwise, false.
-    func isDuplicateAttempt() -> Bool {
-        attempts.contains { $0.pegs == guess.pegs }
+    /// Resets the game state to begin a new match.
+    mutating func restartGame() {
+        guess = Code(kind: .guess)
+        attempts = [Code]()
+        masterCode.randomize(from: pegChoices)
     }
     
     /// Submits the current guess and adds it to the attempts history.
@@ -58,6 +55,16 @@ struct CodeBreaker {
         } else {
             guess.pegs[index] = pegChoices.first ?? Code.missing
         }
+    }
+    
+    /// Returns true if the guess attempt has no pegs chosen; otherwise, false.
+    func isGuessAttemptBlank() -> Bool {
+        guess.pegs.filter { $0 != Code.missing }.count < 1
+    }
+    
+    /// Returns true if an identical peg configuration exists in attempts; otherwise, false.
+    func isDuplicateAttempt() -> Bool {
+        attempts.contains { $0.pegs == guess.pegs }
     }
 }
 
