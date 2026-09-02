@@ -36,6 +36,8 @@ struct CodeBreaker {
     
     /// Resets the game state to begin a new match.
     mutating func restartGame() {
+        Code.setNumberOfPegs(to: Int.random(in: 3...6))
+        masterCode = Code(kind: .master)
         guess = Code(kind: .guess)
         attempts = [Code]()
         masterCode.randomize(from: pegChoices)
