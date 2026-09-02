@@ -52,15 +52,12 @@ struct CodeBreakerView: View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { index in
                 RoundedRectangle(cornerRadius: 10)
-                    .overlay {
-                        if code.pegs[index] == Code.missing {
-                            RoundedRectangle(cornerRadius: 10)
-                                .strokeBorder(Color.gray)
-                        }
-                    }
                     .contentShape(Rectangle())
                     .aspectRatio(1, contentMode: .fit)
-                    .foregroundStyle(code.pegs[index])
+                    .foregroundStyle(getPegColor(code.pegs[index]))
+                    .overlay {
+                        getOverlay(for: code.pegs[index])
+                    }
                     .onTapGesture {
                         if code.kind == .guess {
                             game.changeGuessPeg(at: index)
@@ -79,6 +76,28 @@ struct CodeBreakerView: View {
             } else {
                 MatchMarkers(matches: code.matches)
             }
+        }
+    }
+    
+    private func getPegColor(_ color: String) -> Color {
+        switch color {
+        case "red": .red
+        case "green": .green
+        case "blue": .blue
+        case "yellow": .yellow
+        default: .clear
+        }
+    }
+    
+    @ViewBuilder
+    private func getOverlay(for peg: String) -> some View {
+        if peg == Code.missing {
+            RoundedRectangle(cornerRadius: 10)
+                .strokeBorder(Color.gray)
+        } else if game.isEmojis {
+            Text(peg)
+                .font(.system(size: 120))
+                .minimumScaleFactor(9/120)
         }
     }
     

@@ -5,10 +5,10 @@
 //  Created by JD on 8/19/26.
 //
 
-import SwiftUI
+import Foundation
 
 /// A single peg in the game, represented by its color.
-typealias Peg = Color
+typealias Peg = String
 
 /// Manages the state and logic for an active code-breaking match.
 struct CodeBreaker {
@@ -24,10 +24,18 @@ struct CodeBreaker {
     
     /// The list of peg colors available for player guesses.
     let pegChoices: [Peg]
+    
+    /// A Boolean value indicating whether the game uses emojis as peg choices.
+    let isEmojis: Bool
 
-    /// Initializes a new game with the specified peg choices, code length, and randomized master code.
-    init(pegChoices: [Peg] = [.red, .green, .blue, .yellow], numberOfPegs: Int = 4) {
-        self.pegChoices = pegChoices
+    /// Initializes a new game of emojis or colors, sets the code length, and randomizes the master code.
+    init(numberOfPegs: Int = 4) {
+        isEmojis = Bool.random()
+        if isEmojis {
+            self.pegChoices = ["🤢", "😡", "🥶", "😭"]
+        } else {
+            self.pegChoices = ["red", "green", "blue", "yellow"]
+        }
         Code.setNumberOfPegs(to: numberOfPegs)
         masterCode = Code(kind: .master)
         guess = Code(kind: .guess)
@@ -83,7 +91,7 @@ struct Code {
     var pegs: [Peg] = Array(repeating: Code.missing, count: Code.numberOfPegs)
     
     /// A placeholder peg used to represent an empty or missing slot in a combination.
-    static let missing: Peg = .clear
+    static let missing: Peg = "clear"
     
     /// The length of the code
     private static var numberOfPegs: Int = 4
