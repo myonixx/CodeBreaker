@@ -14,10 +14,10 @@ typealias Peg = Color
 struct CodeBreaker {
     
     /// The secret code the player has to guess.
-    var masterCode = Code(kind: .master)
+    var masterCode: Code
     
     /// The player's active guess attempt.
-    var guess = Code(kind: .guess)
+    var guess: Code
     
     /// A list of the player's previous guess codes.
     var attempts = [Code]()
@@ -25,10 +25,12 @@ struct CodeBreaker {
     /// The list of peg colors available for player guesses.
     let pegChoices: [Peg]
 
-    /// Sets up the available peg choices for the game and automatically
-    /// generates a secret master code selected randomly from those choices.
-    init(pegChoices: [Peg] = [.red, .green, .blue, .yellow]) {
+    /// Initializes a new game with the specified peg choices, code length, and randomized master code.
+    init(pegChoices: [Peg] = [.red, .green, .blue, .yellow], numberOfPegs: Int = 4) {
         self.pegChoices = pegChoices
+        Code.setNumberOfPegs(to: numberOfPegs)
+        masterCode = Code(kind: .master)
+        guess = Code(kind: .guess)
         masterCode.randomize(from: pegChoices)
     }
     
@@ -76,10 +78,13 @@ struct Code {
     
     /// The ordered sequence of pegs making up the combination.
     /// Initial pegs are empty or missing.
-    var pegs: [Peg] = Array(repeating: Code.missing, count: 4)
+    var pegs: [Peg] = Array(repeating: Code.missing, count: Code.numberOfPegs)
     
     /// A placeholder peg used to represent an empty or missing slot in a combination.
     static let missing: Peg = .clear
+    
+    /// The length of the code
+    private static var numberOfPegs: Int = 4
     
     /// The functional role or purpose of a peg combination.
     enum Kind: Equatable {
@@ -97,10 +102,17 @@ struct Code {
         case unknown
     }
     
+    /// Sets the length of the code, if the value falls within the valid range.
+    static func setNumberOfPegs(to numberOfPegs: Int) {
+        if numberOfPegs > 2 && numberOfPegs < 7 {
+            Self.numberOfPegs = numberOfPegs
+        }
+    }
+    
     /// Randomizes the current pegs using choices from the specified pool.
     /// If the pool is empty, assigns a missing placeholder peg.
     mutating func randomize(from pegChoices: [Peg]) {
-        for index in pegChoices.indices {
+        for index in pegs.indices {
             pegs[index] = pegChoices.randomElement() ?? Code.missing
         }
     }
