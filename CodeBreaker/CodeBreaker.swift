@@ -14,37 +14,39 @@ typealias Peg = String
 struct CodeBreaker {
     
     /// The secret code the player has to guess.
-    var masterCode: Code
+    var masterCode: Code = Code(kind: .master)
     
     /// The player's active guess attempt.
-    var guess: Code
+    var guess: Code = Code(kind: .guess)
     
     /// A list of the player's previous guess codes.
     var attempts = [Code]()
     
     /// The list of peg colors available for player guesses.
-    let pegChoices: [Peg]
+    var pegChoices = [Peg]()
     
     /// A Boolean value indicating whether the game uses emojis as peg choices.
-    let isEmojis: Bool
-
-    /// Initializes a new game of emojis or colors, sets the code length, and randomizes the master code.
+    var isEmojis = false
+    
+    /// Initializes a new CodeBreaker game.
     init(numberOfPegs: Int = 4) {
-        isEmojis = Bool.random()
-        if isEmojis {
-            self.pegChoices = ["🤢", "😡", "🥶", "😭"]
-        } else {
-            self.pegChoices = ["red", "green", "blue", "yellow"]
-        }
-        Code.setNumberOfPegs(to: numberOfPegs)
-        masterCode = Code(kind: .master)
-        guess = Code(kind: .guess)
-        masterCode.randomize(from: pegChoices)
+        setupGame(numberOfPegs: numberOfPegs)
     }
     
-    /// Resets the game state to begin a new match.
+    /// Resets the game with a new random code length.
     mutating func restartGame() {
-        Code.setNumberOfPegs(to: Int.random(in: 3...6))
+        setupGame(numberOfPegs: Int.random(in: 3...6))
+    }
+    
+    /// Sets up the game with a set number of pegs, random theme, and random master code.
+    private mutating func setupGame(numberOfPegs: Int) {
+        isEmojis = Bool.random()
+        if isEmojis {
+            pegChoices = ["🤢", "😡", "🥶", "😭"]
+        } else {
+            pegChoices = ["red", "green", "blue", "yellow"]
+        }
+        Code.setNumberOfPegs(to: numberOfPegs)
         masterCode = Code(kind: .master)
         guess = Code(kind: .guess)
         attempts = [Code]()
